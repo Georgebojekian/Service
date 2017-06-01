@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 startService(new Intent(MainActivity.this,MyService.class));
-                buttonstuation = true;
+                buttonstuation = false;
                 if (buttonstuation){
 //                    startService(new Intent(MainActivity.this,MyService.class));
 
