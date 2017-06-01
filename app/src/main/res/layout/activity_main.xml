@@ -10,9 +10,10 @@
       android:id="@+id/start_service_id"
       android:layout_width="50dp"
       android:layout_height="50dp"
-      android:src="@drawable/playpausebutton"
+      android:src="@drawable/playbutton"
       android:layout_centerHorizontal="true"
       android:scaleType="centerCrop"
+      android:clickable="true"
 
       />
     <ImageButton
@@ -23,6 +24,7 @@
         android:layout_below="@+id/start_service_id"
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
+        android:clickable="true"
         />
 
 </RelativeLayout>

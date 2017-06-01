@@ -53,4 +53,11 @@ public class MyService extends Service  {
             return MyService.this;
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
+        mediaPlayer.release();
+    }
 }

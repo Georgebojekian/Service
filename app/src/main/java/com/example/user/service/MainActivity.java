@@ -12,27 +12,30 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity{
-    Boolean buttonstuation = false;
+    Boolean buttonSituation = false;
     MyService myService;
     Boolean mBound = false;
+    ImageButton startpauseService;
+    ImageButton stopService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageButton startpauseService  = (ImageButton) findViewById(R.id.start_service_id);
-        final ImageButton stopService  = (ImageButton) findViewById(R.id.stop_service_id);
+          startpauseService  = (ImageButton) findViewById(R.id.start_service_id);
+          stopService  = (ImageButton) findViewById(R.id.stop_service_id);
         startpauseService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startService(new Intent(MainActivity.this,MyService.class));
-                buttonstuation = false;
-                if (buttonstuation){
-//                    startService(new Intent(MainActivity.this,MyService.class));
-
+                if (!buttonSituation){
+                    Intent intent = new Intent(MainActivity.this,MyService.class);
+                    startService(intent);
+                    startpauseService.setImageResource(R.drawable.pausebutton);
+                    buttonSituation = true;
                 }else {
                     myService.pause();
-                    buttonstuation = false;
+                    startpauseService.setImageResource(R.drawable.playbutton);
+                    buttonSituation = false;
                 }
             }
         });
@@ -46,12 +49,12 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        startService(new Intent(MainActivity.this,MyService.class));
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+            Intent intent = new Intent(MainActivity.this,MyService.class);
+            bindService(intent,mconnection,Context.BIND_AUTO_CREATE);
+    }
 
     @Override
     protected void onStop() {
@@ -61,8 +64,6 @@ public class MainActivity extends AppCompatActivity{
             mBound = false;
         }
     }
-
-
     private ServiceConnection mconnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -70,10 +71,10 @@ public class MainActivity extends AppCompatActivity{
             myService = localBinder.getService();
             mBound = true;
         }
+
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mBound = false;
-
         }
     };
 
